@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: saas_plateforme
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        connection:
+          autocommit: true #Permet de ne pas avoir de problème de transaction(d'éviter le read only)
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5433/titan_hisaa
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  #mail configuration
+  #mail:
+   # host: localhost
+   # port: 1025
+   # username: contact@nitchcorp.tech
+   # password: Titanmail22@
+   # properties:
+     # mail:
+     #   smtp:
+     #     auth: true
+      #    starttls:
+      #      enable: true
+  #Swagger Configuration
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui.html
+    api-docs:
+      path: /v3/api-docs
+    show-actuator: true
+
+
+server:
+  port: 9081
+  servlet:
+    context-path: /api
+jwt:
+  jwtExpirationMs: 86400000
+  jwtSecret: 0b65fa636af7aa3cb256886e744af046e57d735f2deef8fedd29f75b297cf08d6928b25ebd2b85cfe9535682291ef9e050f5b5b4236def8e4ebf860f9c9ef542
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    root: INFO
+    nitchcorp.backend.titan_hisaa: DEBUG

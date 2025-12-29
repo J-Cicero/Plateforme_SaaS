@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  #saas_plateform-app:
+  #build:
+  #context: .
+  #network: host
+  #container_name: saas_plateforme-app
+  #ports:
+  #- "9081:9081"
+  #environment:
+  #config database
+  #SPRING_DATASOURCE_URL: jdbc:postgresql://saas_plateforme-postgres:5432/saas_plateforme
+  #SPRING_DATASOURCE_USERNAME: postgres
+  #SPRING_DATASOURCE_PASSWORD: postgres
+  #SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+  #SPRING_JPA_HIBERNATE_DDL-AUTO: update
+  #SPRING_JPA_SHOW-SQL: true
+  #SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+  #SPRING_JPA_PROPERTIES_HIBERNATE_CONNECTION_AUTOCOMMIT: true
+  #SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+  #config mail
+  #SPRING_MAIL_HOST: titan-hisaa-mailpit
+  #SPRING_MAIL_PORT: 1025
+  #SPRING_MAIL_USERNAME: contact@nitchcorp.tech
+  #SPRING_MAIL_PASSWORD: Titanmail22@
+  #SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+  #SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+  #volumes:
+  #- .:/app
+  #depends_on:
+  #- saas_plateforme-postgres
+  #- saas_plateform-mailpit
+
+  saas_plateforme-adminer:
+    image: adminer:standalone
+    container_name: saas_plateforme-adminer
+    ports:
+      - "9080:8080"
+  saas_plateforme-postgres:
+    image: postgres:15-alpine
+    container_name: saas_plateforme-postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: titan_hisaa
+    volumes:
+      - /home/godbless/Documents/titan_hisaa:/var/lib/postgresql/data
+  titan-hisaa-mailpit:
+    image: axllent/mailpit
+    container_name: titan-hisaa-mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
