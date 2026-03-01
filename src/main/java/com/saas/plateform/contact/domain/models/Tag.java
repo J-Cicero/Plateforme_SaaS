@@ -25,9 +25,6 @@ public class Tag extends BaseEntity {
     @Column(nullable = false, unique = true, updatable = false)
     private UUID trackingId;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String lastName;
-
     @Column(length = 7)
     private String color;
 

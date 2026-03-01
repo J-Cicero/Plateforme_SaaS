@@ -13,7 +13,6 @@ import java.util.UUID;
 public class TagResponse {
 
     private UUID trackingId;
-    private String lastName;
     private String color;
     private String description;
     private LocalDateTime createdAt;

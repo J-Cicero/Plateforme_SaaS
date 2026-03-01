@@ -3,12 +3,17 @@ package com.saas.plateform.contact.application.mappers;
 import com.saas.plateform.contact.domain.models.Contact;
 import com.saas.plateform.contact.application.dtos.requests.ContactRequest;
 import com.saas.plateform.contact.application.dtos.responses.ContactResponse;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ContactMapper {
 
     public Contact toEntity(ContactRequest request) {
+
+        if(request ==null){
+            throw new EntityExistsException();
+        }
         return Contact.builder()
                 .email(request.getEmail())
                 .firstName(request.getFirstName())

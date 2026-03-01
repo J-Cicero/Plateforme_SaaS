@@ -11,8 +11,5 @@ import java.util.UUID;
 public interface TagRepository extends JpaRepository<Tag, Long> {
     
     Optional<Tag> findByTrackingId(UUID trackingId);
-    
-    Optional<Tag> findByLastName(String lastName);
-    
-    boolean existsByLastName(String lastName);
+
 }

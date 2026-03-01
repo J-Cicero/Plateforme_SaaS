@@ -10,7 +10,6 @@ public class TagMapper {
 
     public Tag toEntity(TagRequest request) {
         return Tag.builder()
-                .lastName(request.getLastName())
                 .color(request.getColor())
                 .description(request.getDescription())
                 .build();
@@ -19,7 +18,6 @@ public class TagMapper {
     public TagResponse toResponse(Tag tag) {
         return TagResponse.builder()
                 .trackingId(tag.getTrackingId())
-                .lastName(tag.getLastName())
                 .color(tag.getColor())
                 .description(tag.getDescription())
                 .createdAt(tag.getCreatedAt())
@@ -27,7 +25,6 @@ public class TagMapper {
     }
 
     public void updateEntityFromRequest(TagRequest request, Tag tag) {
-        if (request.getLastName() != null) tag.setLastName(request.getLastName());
         if (request.getColor() != null) tag.setColor(request.getColor());
         if (request.getDescription() != null) tag.setDescription(request.getDescription());
     }

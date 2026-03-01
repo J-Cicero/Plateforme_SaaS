@@ -26,9 +26,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public TagResponse createTag(TagRequest request) {
-        if (tagRepository.existsByLastName(request.getLastName())) {
-            throw new AlreadyExistException("Tag with name '" + request.getLastName() + "' already exists");
-        }
 
         Tag tag = tagMapper.toEntity(request);
         Tag savedTag = tagRepository.save(tag);
@@ -55,11 +52,6 @@ public class TagServiceImpl implements TagService {
     public TagResponse updateTag(UUID trackingId, TagRequest request) {
         Tag tag = tagRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tag not found with trackingId: " + trackingId));
-
-        if (!tag.getLastName().equals(request.getLastName()) && 
-            tagRepository.existsByLastName(request.getLastName())) {
-            throw new AlreadyExistException("Tag with name '" + request.getLastName() + "' already exists");
-        }
 
         tagMapper.updateEntityFromRequest(request, tag);
         Tag updatedTag = tagRepository.save(tag);
