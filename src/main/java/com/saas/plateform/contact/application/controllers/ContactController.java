@@ -83,24 +83,6 @@ public class ContactController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{contactTrackingId}/tags/{tagTrackingId}")
-    @Operation(summary = "Add tag to contact")
-    public ResponseEntity<Void> addTagToContact(
-            @PathVariable UUID contactTrackingId,
-            @PathVariable UUID tagTrackingId) {
-        contactService.addTagToContact(contactTrackingId, tagTrackingId);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/{contactTrackingId}/tags/{tagTrackingId}")
-    @Operation(summary = "Remove tag from contact")
-    public ResponseEntity<Void> removeTagFromContact(
-            @PathVariable UUID contactTrackingId,
-            @PathVariable UUID tagTrackingId) {
-        contactService.removeTagFromContact(contactTrackingId, tagTrackingId);
-        return ResponseEntity.noContent().build();
-    }
-
     @PostMapping("/{contactTrackingId}/segments/{segmentTrackingId}")
     @Operation(summary = "Add contact to segment")
     public ResponseEntity<Void> addContactToSegment(

@@ -4,5 +4,6 @@ public enum StatutEnvoi {
     EN_ATTENTE,
     ENVOYE,
     DELIVRE,
-    ECHOUE
+    ECHOUE,
+    ECHEC
 }

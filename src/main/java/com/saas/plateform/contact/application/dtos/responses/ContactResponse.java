@@ -23,6 +23,7 @@ public class ContactResponse {
     private StatutContact status;
     private String city;
     private String country;
+    private Integer leadScore;
     private Boolean archived;
     private UUID ownerTrackingId;
     private LocalDateTime createdAt;

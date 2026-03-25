@@ -59,6 +59,10 @@ public class Contact extends BaseEntity {
 
     @Builder.Default
     @Column(nullable = false)
+    private Integer leadScore = 0;
+
+    @Builder.Default
+    @Column(nullable = false)
     private Boolean archived = false;
 
     @ManyToOne(fetch = FetchType.LAZY)

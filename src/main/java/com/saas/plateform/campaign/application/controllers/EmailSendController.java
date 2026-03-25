@@ -24,7 +24,8 @@ public class EmailSendController {
     @Operation(summary = "Send an email for a campaign channel to a contact")
     public ResponseEntity<EmailSendResponse> sendEmail(@Valid @RequestBody EmailSendRequest request) {
         EmailSendResponse response = emailSendService.sendEmail(request);
-        HttpStatus status = response.getStatut() == StatutEnvoi.ECHOUE
+        HttpStatus status = (response.getStatut() == StatutEnvoi.ECHOUE
+                || response.getStatut() == StatutEnvoi.ECHEC)
                 ? HttpStatus.BAD_REQUEST
                 : HttpStatus.CREATED;
         return ResponseEntity.status(status).body(response);

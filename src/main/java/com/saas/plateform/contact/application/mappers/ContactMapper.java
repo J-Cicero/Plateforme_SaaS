@@ -24,6 +24,7 @@ public class ContactMapper {
                 .status(request.getStatus())
                 .city(request.getCity())
                 .country(request.getCountry())
+                .leadScore(0)
                 .archived(false)
                 .build();
     }
@@ -40,6 +41,7 @@ public class ContactMapper {
                 .status(contact.getStatus())
                 .city(contact.getCity())
                 .country(contact.getCountry())
+                .leadScore(contact.getLeadScore())
                 .archived(contact.getArchived())
                 .ownerTrackingId(contact.getOwner() != null ? contact.getOwner().getTrackingId() : null)
                 .createdAt(contact.getCreatedAt())

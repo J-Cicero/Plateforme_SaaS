@@ -81,7 +81,7 @@ public class EmailSendServiceImpl implements EmailSendService {
         } catch (Exception ex) {
             log.error("Error while sending email for campaign {} to contact {}",
                     campaign.getId(), contact.getId(), ex);
-            emailSend.setStatut(StatutEnvoi.ECHOUE);
+            emailSend.setStatut(StatutEnvoi.ECHEC);
             emailSend.setMessageErreur(ex.getMessage());
         }
 

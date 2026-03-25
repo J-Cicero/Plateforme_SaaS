@@ -24,11 +24,7 @@ public interface ContactService {
     void archiveContact(UUID trackingId);
     
     void deleteContact(UUID trackingId);
-    
-    void addTagToContact(UUID contactTrackingId, UUID tagTrackingId);
-    
-    void removeTagFromContact(UUID contactTrackingId, UUID tagTrackingId);
-    
+
     void addContactToSegment(UUID contactTrackingId, UUID segmentTrackingId);
     
     void removeContactFromSegment(UUID contactTrackingId, UUID segmentTrackingId);

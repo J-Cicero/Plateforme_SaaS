@@ -1,12 +1,16 @@
 package com.saas.plateform.contact.domain.services.servicesImpl;
 
-import com.saas.plateform.contact.domain.services.ContactService;
-import com.saas.plateform.contact.domain.models.*;
-import com.saas.plateform.contact.infrastructure.repositories.*;
 import com.saas.plateform.contact.application.dtos.requests.ContactRequest;
 import com.saas.plateform.contact.application.dtos.responses.ContactResponse;
 import com.saas.plateform.contact.application.mappers.ContactMapper;
 import com.saas.plateform.contact.domain.enums.StatutContact;
+import com.saas.plateform.contact.domain.models.Contact;
+import com.saas.plateform.contact.domain.models.ContactSegment;
+import com.saas.plateform.contact.domain.models.Segment;
+import com.saas.plateform.contact.domain.services.ContactService;
+import com.saas.plateform.contact.infrastructure.repositories.ContactRepository;
+import com.saas.plateform.contact.infrastructure.repositories.ContactSegmentRepository;
+import com.saas.plateform.contact.infrastructure.repositories.SegmentRepository;
 import com.saas.plateform.Shared.security.user.domain.models.User;
 import com.saas.plateform.Shared.security.user.infrastructure.repositories.UserRepository;
 import com.saas.plateform.Shared.security.exceptions.AlreadyExistException;
@@ -26,9 +30,7 @@ public class ContactServiceImpl implements ContactService {
 
     private final ContactRepository contactRepository;
     private final UserRepository userRepository;
-    private final TagRepository tagRepository;
     private final SegmentRepository segmentRepository;
-    private final ContactTagRepository contactTagRepository;
     private final ContactSegmentRepository contactSegmentRepository;
     private final ContactMapper contactMapper;
 
@@ -113,36 +115,6 @@ public class ContactServiceImpl implements ContactService {
         Contact contact = contactRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Contact not found with trackingId: " + trackingId));
         contactRepository.delete(contact);
-    }
-
-    @Override
-    public void addTagToContact(UUID contactTrackingId, UUID tagTrackingId) {
-        Contact contact = contactRepository.findByTrackingId(contactTrackingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Contact not found with trackingId: " + contactTrackingId));
-        
-        Tag tag = tagRepository.findByTrackingId(tagTrackingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tag not found with trackingId: " + tagTrackingId));
-
-        if (contactTagRepository.existsByContactAndTag(contact, tag)) {
-            throw new AlreadyExistException("Tag already assigned to this contact");
-        }
-
-        ContactTag contactTag = ContactTag.builder()
-                .contact(contact)
-                .tag(tag)
-                .build();
-        contactTagRepository.save(contactTag);
-    }
-
-    @Override
-    public void removeTagFromContact(UUID contactTrackingId, UUID tagTrackingId) {
-        Contact contact = contactRepository.findByTrackingId(contactTrackingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Contact not found with trackingId: " + contactTrackingId));
-        
-        Tag tag = tagRepository.findByTrackingId(tagTrackingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tag not found with trackingId: " + tagTrackingId));
-
-        contactTagRepository.deleteByContactAndTag(contact, tag);
     }
 
     @Override
