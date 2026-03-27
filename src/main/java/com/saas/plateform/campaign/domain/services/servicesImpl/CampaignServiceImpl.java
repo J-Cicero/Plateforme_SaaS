@@ -35,7 +35,7 @@ public class CampaignServiceImpl implements CampaignService {
                         "User not found with trackingId: " + creatorTrackingId));
 
         Campaign campaign = campaignMapper.toEntity(request);
-        campaign.setCreatedBy(creator);
+        campaign.setProprietaire(creator);
         Campaign saved = campaignRepository.save(campaign);
         return campaignMapper.toResponse(saved);
     }
@@ -78,7 +78,7 @@ public class CampaignServiceImpl implements CampaignService {
         User creator = userRepository.findByTrackingId(creatorTrackingId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "User not found with trackingId: " + creatorTrackingId));
-        return campaignRepository.findByCreatedBy(creator).stream()
+        return campaignRepository.findByProprietaire(creator).stream()
                 .map(campaignMapper::toResponse)
                 .collect(Collectors.toList());
     }

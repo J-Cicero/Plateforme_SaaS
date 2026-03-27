@@ -30,7 +30,7 @@ public class CampaignMapper {
                 .startDate(campaign.getStartDate())
                 .endDate(campaign.getEndDate())
                 .createdByTrackingId(
-                        campaign.getCreatedBy() != null ? campaign.getCreatedBy().getTrackingId() : null)
+                        campaign.getProprietaire() != null ? campaign.getProprietaire().getTrackingId() : null)
                 .createdAt(campaign.getCreatedAt())
                 .updatedAt(campaign.getUpdatedAt())
                 .build();

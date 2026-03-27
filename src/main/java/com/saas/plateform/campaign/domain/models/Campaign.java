@@ -47,6 +47,6 @@ public class Campaign extends BaseEntity {
     private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by_id", nullable = false)
-    private User createdBy;
+    @JoinColumn(name = "proprietaire_id", nullable = false)
+    private User proprietaire;
 }

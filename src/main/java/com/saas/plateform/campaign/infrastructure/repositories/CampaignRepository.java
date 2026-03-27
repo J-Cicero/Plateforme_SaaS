@@ -16,5 +16,5 @@ public interface CampaignRepository extends JpaRepository<Campaign, Long> {
 
     List<Campaign> findByType(TypeCampaign type);
 
-    List<Campaign> findByCreatedBy(User createdBy);
+    List<Campaign> findByProprietaire(User proprietaire);
 }
