@@ -45,5 +45,20 @@ public class EmailRequest implements Serializable {
 
     private String contact;
 
+    // Variables pour welcome.html
+    private String firstName;
+    private String registrationDate;
+
+    // Variables pour campaign-notification.html
+    private String campaignName;
+    private String campaignDescription;
+    private String campaignStartDate;
+    private Integer recipientCount;
+
+    // Variables pour password-reset.html
+    private String resetLink;
+    private Integer expiryMinutes;
+    private String supportEmail;
+
     public EmailRequest() {}
 }

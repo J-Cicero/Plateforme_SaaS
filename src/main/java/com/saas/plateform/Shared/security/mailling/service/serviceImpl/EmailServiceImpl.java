@@ -66,7 +66,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     private boolean templateExists(String templateName) {
-        Resource resource = new ClassPathResource("templates/" + templateName + ".html");
+        Resource resource = new ClassPathResource("templates/emails/" + templateName + ".html");
         return resource.exists();
     }
 
@@ -74,9 +74,12 @@ public class EmailServiceImpl implements EmailService {
         logger.info(
                 "Début de l'envoi d'email vers: {} avec le template: {}", request.getMailTo(), template);
 
-        if (!templateExists(template)) {
-            logger.error("Le template {} n'existe pas", template);
-            throw new IllegalArgumentException("Le template " + template + " n'existe pas.");
+        // Ajouter le préfixe "emails/" si pas déjà présent
+        String templatePath = template.startsWith("emails/") ? template : "emails/" + template;
+
+        if (!templateExists(templatePath)) {
+            logger.error("Le template {} n'existe pas", templatePath);
+            throw new IllegalArgumentException("Le template " + templatePath + " n'existe pas.");
         }
 
         try {
@@ -100,6 +103,23 @@ public class EmailServiceImpl implements EmailService {
             model.put("contact", request.getContact());
             model.put("contactEmail", request.getContact());
 
+            // Variables pour welcome.html
+            model.put("firstName", request.getFirstName());
+            model.put("email", request.getMailTo());
+            model.put("platformUrl", request.getLien());
+            model.put("registrationDate", request.getRegistrationDate());
+
+            // Variables pour campaign-notification.html
+            model.put("campaignName", request.getCampaignName());
+            model.put("campaignDescription", request.getCampaignDescription());
+            model.put("campaignStartDate", request.getCampaignStartDate());
+            model.put("recipientCount", request.getRecipientCount());
+
+            // Variables pour password-reset.html
+            model.put("resetLink", request.getResetLink());
+            model.put("expiryMinutes", request.getExpiryMinutes());
+            model.put("supportEmail", request.getSupportEmail());
+
             context.setVariables(model);
 
             logger.debug("Création du message MIME");
@@ -110,7 +130,7 @@ public class EmailServiceImpl implements EmailService {
                             MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                             StandardCharsets.UTF_8.name());
 
-            String html = templateEngine.process(template, context);
+            String html = templateEngine.process(templatePath, context);
 
             helper.setText(html, true);
             helper.setTo(request.getMailTo());

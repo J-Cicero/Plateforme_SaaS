@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification de Campagne</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .content {
+            padding: 30px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .content p {
+            margin: 15px 0;
+        }
+        .campaign-details {
+            background-color: #fff3f0;
+            border-left: 4px solid #f5576c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .campaign-details h3 {
+            color: #f5576c;
+            margin-top: 0;
+        }
+        .detail-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #667eea;
+            display: inline-block;
+            width: 140px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #f5576c;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #f093fb;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #f5576c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Nouvelle Campagne Lancée!</h1>
+        </div>
+        
+        <div class="content">
+            <p>Bonjour,</p>
+            
+            <p>Nous vous annonçons le lancement d'une nouvelle campagne qui devrait vous intéresser:</p>
+            
+            <div class="campaign-details">
+                <h3 th:text="${campaignName}">Nom de la Campagne</h3>
+                
+                <p th:text="${campaignDescription}">Description de la campagne</p>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Date de lancement:</span>
+                    <span th:text="${campaignStartDate}">XX/XX/XXXX</span>
+                </div>
+                
+                <div class="detail-row">
+                    <span class="detail-label">Nombre de destinataires:</span>
+                    <span class="badge" th:text="${recipientCount}">0</span>
+                </div>
+            </div>
+            
+            <p>Cette campagne a été spécialement préparée pour nos utilisateurs les plus engagés comme vous. Nous avons hâte de connaître votre avis et vos retours!</p>
+            
+            <p style="text-align: center;">
+                <a href="#" class="button">Consulter les Détails</a>
+            </p>
+            
+            <p>Si vous avez des questions concernant cette campagne, n'hésitez pas à nous contacter.</p>
+            
+            <p>Merci de votre confiance,<br>
+            L'équipe de la plateforme</p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 Plateforme. Tous droits réservés.</p>
+            <p>Vous recevez cet email car vous êtes inscrit sur notre plateforme.</p>
+        </div>
+    </div>
+</body>
+</html>
