@@ -20,9 +20,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import com.saas.plateform.Shared.security.mailling.dto.request.EmailRequest;
 import com.saas.plateform.Shared.security.mailling.dto.response.EmailResponse;
 import com.saas.plateform.Shared.security.mailling.entity.EmailConfiguration;
-import com.saas.plateform.Shared.security.mailling.mapper.EmailMapper;
-import com.saas.plateform.Shared.security.mailling.repository.EmailRepository;
-import com.saas.plateform.Shared.security.mailling.repository.EmailSendRepository;
+import com.saas.plateform.Shared.security.mailling.repository.EmailConfigurationRepository;
 import com.saas.plateform.Shared.security.mailling.service.EmailService;
 
 import jakarta.mail.internet.MimeMessage;
@@ -35,34 +33,38 @@ public class EmailServiceImpl implements EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
-    private final EmailRepository emailRepository;
-
-    private final EmailSendRepository repository;
+    private final EmailConfigurationRepository emailConfigurationRepository;
 
     private final SpringTemplateEngine templateEngine;
 
-    private final EmailMapper emailMapper;
-
     public EmailServiceImpl(
-            EmailRepository emailRepository,
-            EmailSendRepository repository,
-            SpringTemplateEngine templateEngine,
-            EmailMapper emailMapper) {
-        this.emailRepository = emailRepository;
-        this.repository = repository;
+            EmailConfigurationRepository emailConfigurationRepository,
+            SpringTemplateEngine templateEngine) {
+        this.emailConfigurationRepository = emailConfigurationRepository;
         this.templateEngine = templateEngine;
-        this.emailMapper = emailMapper;
     }
 
     @Override
     public EmailResponse send(EmailRequest request, String template) {
-        return Optional.of(request).stream()
-                .peek(req -> sendMimeMessage(req, template))
-                .map(emailMapper::toEntity)
-                .peek(repository::save)
-                .map(emailMapper::toDto)
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Erreur lors de la sauvegarde"));
+        try {
+            sendMimeMessage(request, template);
+            
+            // Créer une réponse de succès
+            EmailResponse response = new EmailResponse();
+            response.setMailTo(request.getMailTo());
+            response.setMailSubject(request.getMailSubject());
+            response.setStatus("SENT");
+            response.setMessage("Email envoyé avec succès");
+            
+            return response;
+        } catch (Exception ex) {
+            logger.error("Erreur lors de l'envoi de l'email", ex);
+            EmailResponse response = new EmailResponse();
+            response.setMailTo(request.getMailTo());
+            response.setStatus("FAILED");
+            response.setMessage("Erreur: " + ex.getMessage());
+            return response;
+        }
     }
 
     private boolean templateExists(String templateName) {

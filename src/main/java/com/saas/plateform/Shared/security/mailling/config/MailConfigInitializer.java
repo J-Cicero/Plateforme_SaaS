@@ -1,7 +1,7 @@
 package com.saas.plateform.Shared.security.mailling.config;
 
 import com.saas.plateform.Shared.security.mailling.entity.EmailConfiguration;
-import com.saas.plateform.Shared.security.mailling.repository.EmailRepository;
+import com.saas.plateform.Shared.security.mailling.repository.EmailConfigurationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Configuration
 public class MailConfigInitializer {
-    private final EmailRepository emailConfigurationRepository;
+    private final EmailConfigurationRepository emailConfigurationRepository;
     private static final Logger logger = LoggerFactory.getLogger(MailConfigInitializer.class);
 
     @Value("${spring.mail.host:mail.nitchcorp.tech}")
@@ -35,7 +35,7 @@ public class MailConfigInitializer {
     private boolean mailStartTls;
 
 
-    public MailConfigInitializer(EmailRepository emailConfigurationRepository) {
+    public MailConfigInitializer(EmailConfigurationRepository emailConfigurationRepository) {
         this.emailConfigurationRepository = emailConfigurationRepository;
     }
 
